@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de" data-theme="light">
+<html lang="de">
 
 <head>
     <meta charset="UTF-8">
@@ -14,23 +14,14 @@
     <style>
         /* Color variables from appdrawer.html for consistency */
         :root {
-            --bg-color: #f9fafb;
-            --text-color: #111827;
-            --text-color-light: #6b7280;
-            --card-bg: #ffffff;
-            --card-bg-hover: #f3f4f6;
-            --border-color: #e5e7eb;
-            --accent-color: #7c3aed;
-            --accent-color-hover: #8b5cf6;
-        }
-
-        html[data-theme='dark'] {
             --bg-color: #171717;
             --text-color: #fafafa;
             --text-color-light: #a3a3a3;
             --card-bg: #262626;
             --card-bg-hover: #404040;
             --border-color: #404040;
+            --accent-color: #7c3aed;
+            --accent-color-hover: #8b5cf6;
         }
 
         /* Base styles */
@@ -38,7 +29,6 @@
             font-family: 'Ubuntu', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            transition: background-color 0.3s, color 0.3s;
         }
 
         /* --- Benutzerdefinierte Scrollbar-Stile (von AuriMea/MemoMea übernommen) --- */
@@ -406,14 +396,6 @@
     <div id="toast"></div>
 
     <script>
-        // --- THEME SWITCHING LISTENER (Logic from appdrawer.html) ---
-        window.addEventListener('message', (event) => {
-            if (event.data === 'set-theme-dark') {
-                document.documentElement.dataset.theme = 'dark';
-            } else if (event.data === 'set-theme-light') {
-                document.documentElement.dataset.theme = 'light';
-            }
-        });
 
         document.addEventListener('DOMContentLoaded', () => {
             const linksContainer = document.getElementById('links-container');
@@ -423,13 +405,8 @@
             // Render function to update the UI
             const render = () => {
                 const isArchivedView = window.viewState ? window.viewState.showArchived : false;
-                if (isArchivedView) {
-                    toggleArchiveBtn.style.backgroundColor = 'var(--accent-color)';
-                    toggleArchiveBtn.style.color = 'white';
-                } else {
-                    toggleArchiveBtn.style.backgroundColor = '#4b5563'; // gray-600
-                    toggleArchiveBtn.style.color = '#e5e7eb'; // gray-200
-                }
+                toggleArchiveBtn.style.backgroundColor = isArchivedView ? 'var(--accent-color)' : '#4b5563';
+                toggleArchiveBtn.style.color = isArchivedView ? 'white' : '#e5e7eb';
                 const archivedLinksCount = links.filter(link => link.status === 'archived').length;
                 archiveCountSpan.textContent = archivedLinksCount;
                 lucide.createIcons();
